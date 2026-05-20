@@ -70,6 +70,7 @@ public:
 #if MODE_AUTOLAND_ENABLED
         AUTOLAND      = 26,
 #endif
+        WIG           = 27,
 
     // Mode number 30 reserved for "offboard" for external/lua control.
     };
@@ -1070,6 +1071,36 @@ protected:
     void restore_mode(const char *reason, ModeReason modereason);
 
     bool _enter() override;
+};
+
+class ModeWIG : public Mode
+{
+public:
+
+    Number mode_number() const override { return Number::WIG; }
+    const char *name() const override { return "WIG"; }
+    const char *name4() const override { return "WIGE"; }
+
+    // methods that affect movement of the vehicle in this mode
+    void update() override;
+    
+    bool mode_allows_autotuning() const override { return true; }
+
+    void run() override;
+
+#if AP_PLANE_SYSTEMID_ENABLED
+    // does this mode support fixed wing systemid?
+    bool supports_fw_systemid() const override { return true; }
+#endif
+
+#if MODE_AUTOLAND_ENABLED   
+    // true if mode allows landing direction to be set on first takeoff after arm in this mode 
+    bool allows_autoland_direction_capture() const override { return true; }
+#endif
+
+protected:
+    bool _enter() override;
+
 };
 
 #endif

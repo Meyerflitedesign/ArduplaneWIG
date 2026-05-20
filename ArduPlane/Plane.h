@@ -156,6 +156,7 @@ public:
     friend class ModeFBWA;
     friend class ModeFBWB;
     friend class ModeCruise;
+    friend class ModeWIG;
     friend class ModeAutoTune;
     friend class ModeAuto;
     friend class ModeRTL;
@@ -302,6 +303,7 @@ private:
     ModeFBWA mode_fbwa;
     ModeFBWB mode_fbwb;
     ModeCruise mode_cruise;
+    ModeWIG mode_wig;
     ModeAutoTune mode_autotune;
     ModeAuto mode_auto;
     ModeRTL mode_rtl;
