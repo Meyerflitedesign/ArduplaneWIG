@@ -593,6 +593,14 @@ public:
 #if AP_PLANE_SYSTEMID_ENABLED
     AP_SystemID systemid;
 #endif
+
+    // WIG parameters
+    AP_Float wig_height_control_gain;
+    AP_Int16 wig_thr_min;
+    AP_Int16 wig_thr_max;
+    AP_Int16 wig_alt_desire_cm;
+    AP_Int16 wig_alt_min_cm;
+    AP_Int16 wig_alt_max_cm;
 };
 
 extern const AP_Param::Info var_info[];
