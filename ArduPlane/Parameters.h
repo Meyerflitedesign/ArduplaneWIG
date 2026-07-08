@@ -595,12 +595,12 @@ public:
 #endif
 
     // WIG parameters
-    AP_Float wig_height_control_gain;
-    AP_Int16 wig_thr_min;
-    AP_Int16 wig_thr_max;
-    AP_Int16 wig_alt_desire_cm;
-    AP_Int16 wig_alt_min_cm;
-    AP_Int16 wig_alt_max_cm;
+    AP_Int16 wig_thr_min;  // Minimum throttle for WIG mode
+    AP_Int16 wig_thr_max;  // Maximum throttle for WIG mode
+    AP_Int16 wig_alt_min_cm;  // Minimum altitude in centimeters for WIG mode
+    AP_Int16 wig_alt_max_cm;  // Maximum altitude in centimeters for WIG mode
+    AP_Int16 wig_alt_des_cm;  // Desired altitude in centimeters for WIG mode
+    AP_Float wig_gain;  // Gain for height control in WIG mode
 };
 
 extern const AP_Param::Info var_info[];

@@ -1290,12 +1290,12 @@ const AP_Param::GroupInfo ParametersG2::var_info[] = {
     AP_GROUPINFO("RNGFND_LND_DIST", 41, ParametersG2, rangefinder_land_engage_dist_m, 0),
 #endif
 
-    AP_GROUPINFO("WIG_HEIGHT_CONTROL_GAIN", 42, ParametersG2, wig_height_control_gain, 1.0f),
-    AP_GROUPINFO("WIG_THR_MIN", 43, ParametersG2, wig_thr_min, 1000),
-    AP_GROUPINFO("WIG_THR_MAX", 44, ParametersG2, wig_thr_max, 2000),
-    AP_GROUPINFO("WIG_ALT_MIN", 45, ParametersG2, wig_alt_min_cm, 10),
-    AP_GROUPINFO("WIG_ALT_MAX", 46, ParametersG2, wig_alt_max_cm, 40),
-    AP_GROUPINFO("WIG_ALT_DESIRED", 47, ParametersG2, wig_alt_desire_cm, 25),
+    AP_GROUPINFO("WIG_THR_MIN", 42, ParametersG2, wig_thr_min, 1000),
+    AP_GROUPINFO("WIG_THR_MAX", 43, ParametersG2, wig_thr_max, 2000),
+    AP_GROUPINFO("WIG_ALT_MIN", 44, ParametersG2, wig_alt_min_cm, 10),
+    AP_GROUPINFO("WIG_ALT_MAX", 45, ParametersG2, wig_alt_max_cm, 40),
+    AP_GROUPINFO("WIG_ALT_DES", 46, ParametersG2, wig_alt_des_cm, 25),
+    AP_GROUPINFO("WIG_GAIN", 47, ParametersG2, wig_gain, 1.0f),
 
     AP_GROUPEND
 };
