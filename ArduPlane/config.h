@@ -61,10 +61,10 @@
  # define FLIGHT_MODE_4                  Mode::Number::FLY_BY_WIRE_A
 #endif
 #if !defined(FLIGHT_MODE_5)
- # define FLIGHT_MODE_5                  Mode::Number::MANUAL
+ # define FLIGHT_MODE_5                  Mode::Number::WIG
 #endif
 #if !defined(FLIGHT_MODE_6)
- # define FLIGHT_MODE_6                  Mode::Number::MANUAL
+ # define FLIGHT_MODE_6                  Mode::Number::WIG
 #endif
 
 
