@@ -1100,6 +1100,11 @@ public:
 
 protected:
     bool _enter() override;
+    // float altitude_ground_m_prev = 0;
+    // float v_z_prev = 0;
+    float alt_err_m_prev;
+    float alt_err_rate_ms_prev;
+    uint32_t last_ms;
 
 };
 

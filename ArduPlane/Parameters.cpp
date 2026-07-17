@@ -1295,7 +1295,9 @@ const AP_Param::GroupInfo ParametersG2::var_info[] = {
     AP_GROUPINFO("WIG_ALT_MIN", 44, ParametersG2, wig_alt_min_cm, 10),
     AP_GROUPINFO("WIG_ALT_MAX", 45, ParametersG2, wig_alt_max_cm, 40),
     AP_GROUPINFO("WIG_ALT_DES", 46, ParametersG2, wig_alt_des_cm, 25),
-    AP_GROUPINFO("WIG_GAIN", 47, ParametersG2, wig_gain, 1.0f),
+    AP_GROUPINFO("WIG_KP", 47, ParametersG2, wig_kp, 1.0f),
+    AP_GROUPINFO("WIG_KD", 48, ParametersG2, wig_kd, 0.1f),
+    // AP_SUBGROUPINFO(wig_alt_pid, "WIG_ALT_", 47, ParametersG2, AC_PID),
 
     AP_GROUPEND
 };

@@ -600,7 +600,9 @@ public:
     AP_Int16 wig_alt_min_cm;  // Minimum altitude in centimeters for WIG mode
     AP_Int16 wig_alt_max_cm;  // Maximum altitude in centimeters for WIG mode
     AP_Int16 wig_alt_des_cm;  // Desired altitude in centimeters for WIG mode
-    AP_Float wig_gain;  // Gain for height control in WIG mode
+    AP_Float wig_kp;
+    AP_Float wig_kd;
+    //AC_PID wig_alt_pid{1.0,  0.0,   0.0, 0 ,  10.0,   5.0,  5.0 ,  5.0  , 0.0};
 };
 
 extern const AP_Param::Info var_info[];

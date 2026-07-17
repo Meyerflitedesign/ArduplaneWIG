@@ -35,18 +35,30 @@ void ModeWIG::update()
     plane.nav_roll_cd  = plane.channel_roll->norm_input() * plane.roll_limit_cd;
     plane.update_load_factor();
 
-    // Ignore pitch input from sticks, instead use rangefinder to maintain altitude
-    float altitude_ground_m = plane.rangefinder.distance_orient(ROTATION_PITCH_270);
-    float altitude_error_m = plane.g2.wig_alt_des_cm * 0.01f - altitude_ground_m;
+    float now = AP_HAL::millis();
+    float dt = 0.001f * (now - last_ms);  // Seconds
+    last_ms = now;
 
-    // Simple proportional control
-    plane.nav_pitch_cd = constrain_int32(altitude_error_m*10000, plane.pitch_limit_min*100, plane.aparm.pitch_limit_max*100);
+    // Ignore pitch input from sticks, instead use rangefinder to maintain altitude
+    float alt_gnd_m = plane.rangefinder.distance_orient(ROTATION_PITCH_270);
+    float alt_err_m = plane.g2.wig_alt_des_cm * 0.01f - alt_gnd_m;  // Too low is positive
+    float alt_err_rate_ms = (alt_err_m - alt_err_m_prev) / dt;  // Down is positive
+
+    // Error rate and simple complementary filter
+    alt_err_rate_ms = 0.1*alt_err_rate_ms + 0.9*alt_err_rate_ms_prev;
+
+    // Simple proportional controller
+    // plane.nav_pitch_cd = constrain_int32(altitude_error_m*10000, plane.pitch_limit_min*100, plane.aparm.pitch_limit_max*100);
+
+    // Simple PD controller
+    float pitch_gain = plane.g2.wig_kp*alt_err_m + plane.g2.wig_kd*alt_err_rate_ms;
+    plane.nav_pitch_cd = constrain_int32(1000*pitch_gain, plane.pitch_limit_min*100, plane.aparm.pitch_limit_max*100);
 
     // Write to gcs
     // plane.gcs().send_text(MAV_SEVERITY_INFO, "nav_pitch=%.2f", plane.nav_pitch_cd * 0.01f);
 
     // Not needed?
-    //plane.adjust_nav_pitch_throttle();
+    // plane.adjust_nav_pitch_throttle();
     
     // Should never happen with WIG?
     if (plane.fly_inverted()) {
