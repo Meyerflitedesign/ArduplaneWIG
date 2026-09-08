@@ -16,14 +16,14 @@ bool ModeWIG::_enter()
     }
 
     // Get altitude reading from rangefinder
-    float altitude_ground_m = plane.rangefinder.distance_orient(ROTATION_PITCH_270);
+/*     float altitude_ground_m = plane.rangefinder.distance_orient(ROTATION_PITCH_270);
     
     // Only enter if altitude is below WIG_ALT_MAX and above WIG_ALT_MIN
     if (altitude_ground_m < plane.g2.wig_alt_min_cm * 0.01f ||
         altitude_ground_m > plane.g2.wig_alt_max_cm * 0.01f) {
         plane.gcs().send_text(MAV_SEVERITY_ERROR, "Cannot enter WIG mode: Altitude out of range");
         return false;
-    }
+    } */
 
     plane.gcs().send_text(MAV_SEVERITY_ERROR, "Entering WIG mode");
     return true;
@@ -52,12 +52,25 @@ void ModeWIG::update()
 
     // Simple PD controller
     float pitch_gain = plane.g2.wig_kp*alt_err_m + plane.g2.wig_kd*alt_err_rate_ms;
-    plane.nav_pitch_cd = constrain_int32(1000*pitch_gain, plane.pitch_limit_min*100, plane.aparm.pitch_limit_max*100);
+    // plane.nav_pitch_cd = constrain_int32(1000*pitch_gain, plane.pitch_limit_min*100, plane.aparm.pitch_limit_max*100);
+
+    // Update temporary variables
+    alt_err_m_prev = alt_err_m;
+    alt_err_rate_ms_prev = alt_err_rate_ms;
 
     // Write to gcs
     // plane.gcs().send_text(MAV_SEVERITY_INFO, "nav_pitch=%.2f", plane.nav_pitch_cd * 0.01f);
 
-    // Not needed?
+    float pitch_input = plane.channel_pitch->norm_input();
+    float pitch_input_cd;
+    if (pitch_input > 0) {
+        pitch_input_cd = pitch_input * plane.aparm.pitch_limit_max*100;
+    } else {
+        pitch_input_cd = -(pitch_input * plane.pitch_limit_min*100);
+    }
+    // Set pitch based on pilot input and controller input.
+    plane.nav_pitch_cd = constrain_int32(pitch_input_cd + 1000*pitch_gain, plane.pitch_limit_min*100, plane.aparm.pitch_limit_max*100);
+    // Todo: is this needed in ground effect mode?
     // plane.adjust_nav_pitch_throttle();
     
     // Should never happen with WIG?

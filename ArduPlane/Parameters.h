@@ -602,6 +602,7 @@ public:
     AP_Int16 wig_alt_des_cm;  // Desired altitude in centimeters for WIG mode
     AP_Float wig_kp;
     AP_Float wig_kd;
+    // AP_Float wig_elev_auth;  // Manual authority of elevator control in range [0,1]. 1=full manual authority
     //AC_PID wig_alt_pid{1.0,  0.0,   0.0, 0 ,  10.0,   5.0,  5.0 ,  5.0  , 0.0};
 };
 
